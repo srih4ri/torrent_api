@@ -10,7 +10,7 @@ require 'uri'
 %w(result base result_set).each do |filename|
   require File.join(File.dirname(__FILE__), 'torrent_reactor', filename)
 end
-%w(result base categories result_set).each do |filename|
+%w(result base categories result_set browse).each do |filename|
   require File.join(File.dirname(__FILE__), 'pirate_bay', filename)
 end
 %w(result base result_set).each do |filename|
@@ -18,7 +18,7 @@ end
 end
 
 class TorrentApi
-  attr_accessor :service, :search_term, :results
+  attr_accessor :service, :search_term, :results,:category
 
   def initialize(service=:pirate_bay, search_term=nil)
     @service = service
@@ -52,6 +52,10 @@ class TorrentApi
       results = handler.execute
     end
     @results = results
+  end
+  def browse
+    handler = PirateBay::Browse.new(@category)
+    @results = handler.execute
   end
 end
 
