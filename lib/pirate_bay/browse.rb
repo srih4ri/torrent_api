@@ -63,7 +63,7 @@ module PirateBay
         end
       end
       links = doc.css("#searchResult tr")
-      links[0..links.length-2].each_with_index do |row, index|
+      links[0..-1].each_with_index do |row, index|
         next if index == 0
         result = PirateBay::Result.new(row)
         @results << result
